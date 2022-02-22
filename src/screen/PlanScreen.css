@@ -1,0 +1,28 @@
+.plan {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.plan .desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.plan h3 {
+    text-align: center;
+}
+
+.plan p {
+    text-align: center;
+    margin-top: -15px;
+}
+
+.basic, .standard, .premium {
+    opacity: 0.8;
+}
+
+.basic:hover, .standard:hover, .premium:hover {
+    opacity: 1;
+}
