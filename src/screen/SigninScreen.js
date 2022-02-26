@@ -2,26 +2,36 @@ import React, { useRef, useState } from 'react'
 import { signin } from '../firebase'
 import './SigninScreen.css'
 import SignupScreen from './SignupScreen'
+import LoadingBar from 'react-top-loading-bar'
 
-function SigninScreen() {
+function SigninScreen(props) {
     const [signUp, setSignUp] = useState(false)
     const [blank, setBlank] = useState('')
     const [input, setinput] = useState('')
+    const [progress, setProgress] = useState(0);
 
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
 
     const signIn = async (e) => {
         e.preventDefault()
+        props.progress(20);
         await signin(emailRef.current.value, passwordRef.current.value).then((authuser) => {
             console.log(authuser);
         }).catch(error => alert(error.message))
+        props.progress(100);
+    }
+
+    const onLoad = (progress) => {
+        setProgress(progress);
     }
 
     return (
         <div className='signinscreen'>
+            <LoadingBar progress={progress} onLoaderFinished={() => setProgress(0)}
+      />
             {signUp ? (
-                <SignupScreen />
+                <SignupScreen progress={onLoad}/>
             ) : (
                 <form>
                     <h2 style={{ textAlign: 'left' }}>Sign In</h2>

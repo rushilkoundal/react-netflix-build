@@ -2,15 +2,17 @@ import React, { useRef } from 'react'
 import { signup } from '../firebase'
 import './SignupScreen.css'
 
-function SignupScreen() {
+function SignupScreen(props) {
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
 
     const register = async (e) => {
         e.preventDefault()
+        props.progress(20);
         await signup(emailRef.current.value, passwordRef.current.value).then((authuser) => {
             console.log(authuser);
         }).catch(error => alert(error.message))
+        props.progress(100);
     }
 
     return (
